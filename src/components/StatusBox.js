@@ -15,7 +15,7 @@ const StatusBox = ({
   const colorClass = getColorClass(percentage);
 
   return (
-    <div className="bg-gray-800 shadow-xl rounded-xl p-6 flex flex-col items-center transform transition-transform duration-500 hover:scale-105">
+    <div className="bg-gray-800 shadow-xl rounded-xl p-6 flex flex-col items-center">
       <div className="text-2xl font-semibold mb-2 text-center text-indigo-300 flex items-center">
         {keyName} <FaArrowRight className="ml-2 text-indigo-500" />
       </div>
@@ -35,7 +35,7 @@ const StatusBox = ({
             disabled={isLoading(keyName, i) || globalLoading}
             onClick={() => (status ? handleShutdown(keyName, i) : handleStart(keyName, i))}
             className={`text-sm flex items-center justify-center py-1 px-3 rounded-lg transition-colors duration-300 ${
-              status ? 'bg-green-600 hover:bg-green-500' : 'bg-red-600 hover:bg-red-500'
+              status ? 'bg-green-600' : 'bg-red-600'
             } text-white disabled:opacity-50`}
           >
             {isLoading(keyName, i) ? (

@@ -86,9 +86,54 @@ export const statusConnect = async (id) => {
     }
 }
 
-export const statusConnector = async (id, connectorType) => {
+export const startSchema = async (id) => {
     try {
-        const response = await axios.post(`${KAFKA_URL}/status/${id}/${connectorType}`, {});
+        const response = await axios.post(`${KAFKA_URL}/schema/start/${id}`, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const shutDownSchema = async (id) => {
+    try {
+        const response = await axios.post(`${KAFKA_URL}/schema/shutdown/${id}`, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const statusSchema = async (id) => {
+    try {
+        const response = await axios.post(`${KAFKA_URL}/schema/status/${id}`, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const startC3 = async (id) => {
+    try {
+        const response = await axios.post(`${KAFKA_URL}/c3/start/${id}`, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const shutDownC3 = async (id) => {
+    try {
+        const response = await axios.post(`${KAFKA_URL}/c3/shutdown/${id}`, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const statusC3 = async (id) => {
+    try {
+        const response = await axios.post(`${KAFKA_URL}/c3/status/${id}`, {});
         return response.data;
     } catch (error) {
         throw error;

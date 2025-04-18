@@ -1,4 +1,3 @@
-// src/components/Dashboard.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
