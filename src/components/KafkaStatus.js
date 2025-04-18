@@ -8,16 +8,19 @@ import {
   shutDownConnect,
   shutDownSchema,
   shutDownC3,
+  shutDownKsql,
   startBroker,
   startController,
   startConnect,
   startSchema,
   startC3,
+  startKsql,
   statusBroker,
   statusController,
   statusConnect,
   statusSchema,
   statusC3,
+  statusKsql,
 } from '../api/api';
 
 const KafkaStatus = () => {
@@ -28,6 +31,7 @@ const KafkaStatus = () => {
       ['커넥트', [true, true]],
       ['스키마', [true, true]],
       ['C3', [true]],
+      ['KSQL', [true, true]],
     ])
   );
 
@@ -38,6 +42,7 @@ const KafkaStatus = () => {
       ['커넥트', [false, false]],
       ['스키마', [false, false]],
       ['C3', [false]],
+      ['KSQL', [false, false]],
     ])
   );
 
@@ -74,6 +79,7 @@ const KafkaStatus = () => {
       '커넥트': statusConnect,
       '스키마': statusSchema,
       'C3': statusC3,
+      'KSQL': statusKsql,
     };
 
     const ports = {
@@ -82,6 +88,7 @@ const KafkaStatus = () => {
       '커넥트': '8083',
       '스키마': '8081',
       'C3': '9021',
+      'KSQL': '8088',
     };
 
     try {
@@ -114,6 +121,7 @@ const KafkaStatus = () => {
       '커넥트': shutDownConnect,
       '스키마': shutDownSchema,
       'C3': shutDownC3,
+      'KSQL': shutDownKsql,
     };
 
     try {
@@ -142,6 +150,7 @@ const KafkaStatus = () => {
       '커넥트': startConnect,
       '스키마': startSchema,
       'C3': startC3,
+      'KSQL': startKsql,
     };
 
     try {
@@ -176,7 +185,7 @@ const KafkaStatus = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(async () => {
+    const fetchInitialStatus = async () => {
       try {
         const allStatus = await Promise.all([
           statusBroker(1), statusBroker(2), statusBroker(3),
@@ -184,6 +193,7 @@ const KafkaStatus = () => {
           statusConnect(1), statusConnect(2),
           statusSchema(1), statusSchema(2),
           statusC3(1),
+          statusKsql(1), statusKsql(2),
         ]);
 
         const map = new Map(statusMap);
@@ -192,9 +202,10 @@ const KafkaStatus = () => {
         map.set('커넥트', allStatus.slice(6, 8).map((s) => s.includes('8083')));
         map.set('스키마', allStatus.slice(8, 10).map((s) => s.includes('8081')));
         map.set('C3', [allStatus[10].includes('9021')]);
+        map.set('KSQL', allStatus.slice(11, 13).map((s) => s.includes('8088')));
         setStatusMap(map);
 
-        ['브로커', '컨트롤러', '커넥트', '스키마', 'C3'].forEach((key) => {
+        ['브로커', '컨트롤러', '커넥트', '스키마', 'C3', 'KSQL'].forEach((key) => {
           const slice = map.get(key);
           slice.forEach((ok, i) => {
             if (ok) addLogMessage(`${key} ${i + 1} 상태: 정상`);
@@ -204,8 +215,11 @@ const KafkaStatus = () => {
       } catch (error) {
         addErrorMessage(`상태 확인 오류: ${error.message}`);
       }
-    }, 10000);
+    };
 
+    fetchInitialStatus();
+
+    const interval = setInterval(fetchInitialStatus, 10000);
     return () => clearInterval(interval);
   }, []);
 

@@ -17,7 +17,7 @@ const StatusBox = ({
   return (
     <div className="bg-gray-800 shadow-xl rounded-xl p-6 flex flex-col items-center">
       <div className="text-2xl font-semibold mb-2 text-center text-indigo-300 flex items-center">
-        {keyName} <FaArrowRight className="ml-2 text-indigo-500" />
+        {keyName}
       </div>
       <div className="w-full h-4 bg-gray-700 rounded-full mb-4 overflow-hidden">
         <div

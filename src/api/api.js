@@ -139,3 +139,30 @@ export const statusC3 = async (id) => {
         throw error;
     }
 }
+
+export const startKsql = async (id) => {
+    try {
+        const response = await axios.post(`${KAFKA_URL}/ksql/start/${id}`, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const shutDownKsql = async (id) => {
+    try {
+        const response = await axios.post(`${KAFKA_URL}/ksql/shutdown/${id}`, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const statusKsql = async (id) => {
+    try {
+        const response = await axios.post(`${KAFKA_URL}/ksql/status/${id}`, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
