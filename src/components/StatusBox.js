@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaArrowRight, FaCheckCircle, FaPowerOff, FaSpinner } from 'react-icons/fa';
+import { FaCheckCircle, FaPowerOff, FaSpinner } from 'react-icons/fa';
 
 const StatusBox = ({
   keyName,
